@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[基于注解的java csv 序列化工具]]></title>
+      <url>%2F2017%2F04%2F11%2Fannotation-based-csv-serialize-tool%2F</url>
+      <content type="text"><![CDATA[因为最近要做一个生成各种CSV文件的工程，于是就实现了这个根据Java Class Field进行CSV序列化的工具，基于注解的形式，只需要在相关类上添加注解，就可以实现自定义的CSV序列化方案github 地址：https://github.com/lahahana/csvjar已经推到maven 中央仓库maven pom配置： &lt;dependency&gt; &lt;groupId&gt;com.github.lahahana&lt;/groupId&gt; &lt;artifactId&gt;csv&lt;/artifactId&gt; &lt;version&gt;1.0.0&lt;/version&gt; &lt;/dependency&gt;通过调用CsvSerializer.serialize()来进行CSV序列化 相关注解： @CsvIgnore :此注解为标识性注解，@Target({ElementType.FIELD}), 表示该字段在序列化时会被忽略 @CsvIgnoreProperties：此注解@Target({ElementType.TYPE})，在类级别指定当前类所拥有字段的哪些在序列化时忽略 @CsvProperty：此注解@Target({ElementType.TYPE})，通过指定此注解的header，order,分别可以实现在序列化时指定指定的字段的csv header的值，字段的序列化顺序。最终要的一个属性是converter，如果需要对特定字段在序列化时进行一些数据转换的操作，可以通过继承com.alpha.csv.convertor.Converter接口,实现自定义的Converter。 Demo： @CsvIgnoreProperties({&quot;country&quot;}) public class Address { private String country = &quot;CN&quot;; @CsvIgnore public String state = &quot;ZJ&quot;; private String city = &quot;Hangzhou&quot;; } public class Person { @CsvProperty(header=&quot;Name&quot;, order=1) private String name = &quot;Lahahana&quot;; @CsvProperty(header=&quot;ID&quot;, order=0) private int id = 10001; @CsvProperty(header = &quot;Birthday&quot;, order=2, converter = TimeToDateConvertor.class) public long birthday= System.currentTimeMillis(); private Address address = new Address(); public static void main(String []args) throws CsvException, IOException { List list = new ArrayList(); Person p = new Person(); for(int i=0;i&lt;10;i++) list.add(p); String info = CsvSerializer.serialize(list, Person.class); System.out.println(info); } } Result: ID,Name,Birthday,city 10001,Lahahana,Tue Mar 28 21:14:59 GMT+08:00 2017,Hangzhou 10001,Lahahana,Tue Mar 28 21:14:59 GMT+08:00 2017,Hangzhou]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[Hello Lahahana]]></title>
       <url>%2F2017%2F04%2F08%2Fhello-world%2F</url>
       <content type="text"></content>
