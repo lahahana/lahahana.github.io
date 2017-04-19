@@ -3,6 +3,20 @@
   
     
     <entry>
+      <title><![CDATA[Java Stream 并行流随笔]]></title>
+      <url>%2F2017%2F04%2F19%2Fjava-stream-issue%2F</url>
+      <content type="text"><![CDATA[Java Stream 是 JDK1.8 才引入的特性，最近在使用Java Stream时遇到了一些坑，在项目的代码中用到了Stream API的parallelStream， 在并行流中进行了IO操作，然而由于IO操作花费的时间比较多，让后续其余的的并行流处理操作也hung住了，给我的感觉就是整个java进程都hung住了。在深究之后发现, 所有并行流中发生的操作都会交由ForkJoinPool,common()的forkjoinpool来执行， 而这个fork join pool是整个jvm全局共享的， 由于fork/join的特点，如果在并行流中有阻塞任务长时间存在，则会对其余线程产生副作用，对性能有很大影响。]]></content>
+    </entry>
+
+    
+    <entry>
+      <title><![CDATA[Spring Cloud 使用随笔]]></title>
+      <url>%2F2017%2F04%2F19%2Fspring-cloud-demo%2F</url>
+      <content type="text"><![CDATA[最近Spring Cloud正在大力推广， 自己也参加了在上海的Spring Cloud线下沙龙，多了一些对Spring Cloud技术栈在实际项目中的运用经验。于是自己搭建了一个Spring Cloud的demo。Eureka： 服务注册与发现Ribbon: 用作Load BalanceZuul： 作为网关路由，反向代理，可在这层结合Ribbon进行负载均衡，鉴权、流控、审计等流程可以在zuul这一层实现 spirg cloud中一些特殊的自定义配置我也在项目的配置文件中进行了配置。 关于Zuul的性能问题, zuul在性能方面确实和Nginx有一定的差距，到目前为止，这一点不可否认。 github地址：https://github.com/lahahana/spring-cloud-demo 借此机会向读者推荐携程开源的基于Spring Cloud 的配置中心Apollo,携程框架部门研发的配置管理平台，能够集中化管理应用不同环境、不同集群的配置，配置修改后能够实时推送到应用端，并且具备规范的权限、流程治理等特性.github:https://github.com/ctripcorp/apollo]]></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[Eclipse 翻译插件]]></title>
       <url>%2F2017%2F04%2F13%2Feclipse-plugin%2F</url>
       <content type="text"><![CDATA[自己写的eclipse翻译插件，支持多种语言，将jar包拷贝到eclipse dropins目录下，重启即可。操作步骤：选中文本， 按快捷键 Ctrl + 1。 插件下载地址：https://github.com/lahahana/eclipse_translater/releases/tag/1.0]]></content>
